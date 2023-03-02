@@ -3,16 +3,28 @@
 
 {% block content %}
 
-<h1>Home Template</h1>
+<div class="home-container">
+ <div class="row">
+  <div class="col" style="float:left;width:20%">
+    <h3>Browse Topic</h3>
+    <hr>
+    <a href="{% url 'home'%}">ALL</a><br>
+    {% for topic in topics %}
+    <a href="{% url 'home' %}?q={{topic.name}}">{{topic}}</a>
+    <br>
+    {% endfor %}
+  </div>
 
-<div>
-  <a href="{% url 'create-room' %}">Create Room</a>
+
+  <div class="col" style="float:left; width: 50%;">
+    <p>There are {{room_count}} Rooms available.</p>
+  <a href="{% url 'create-room' %}" style="position: absolute;top: 20px;right: 20px;background-color: #008CBA;color: white;border: none;padding: 10px 20px;border-radius: 5px;cursor: pointer;">Create Room</a>
     {% for room in rooms %}
-
+       <br>
       <div>
-        <a href="{% url 'update-room' room.id %}">Edit</a>
-        <a href="{% url 'delete-room' room.id %}">Delete</a>
-        <br>
+        <a href="{% url 'update-room' room.id %}" style="float:right;background-color: #4CAF50;color: white;border: none;padding: 10px 20px;border-radius: 5px;cursor: pointer;">Edit</a>
+        <a href="{% url 'delete-room' room.id %}" style="float:right; background-color: red;color: white;border: none;padding: 10px 20px;border-radius: 5px;cursor: pointer;">Delete</a>
+        <br><br>
         <span>@{{room.host.username}}</span>
         <h5>{{room.id}} -- <a href="{% url 'room' room.id %}">{{room.name}} </a></h5>
         <small>{{room.topic.name}}</small>
@@ -20,6 +32,7 @@
       </div>
 
     {% endfor %}
+  </div>
 </div>
 
 {% endblock content %}
